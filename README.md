@@ -8,15 +8,7 @@ Stack
 
 Launch
 
-1. With Docker
-
-   ```bash
-    $ ...
-    ```
- 
-2. Default launch
-
    ```bash
     $ python main.py
-    ```
+   ```
    
