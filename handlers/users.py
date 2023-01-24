@@ -9,13 +9,14 @@ from db.base import session
 async def command_start(message: types.Message, session: AsyncSession = session):
     created = await create_user_or_group(message, session)
     is_group = message.chat.type in ["group", "supergroup"]
+    is_user = message.chat.type in ["private"]
     if is_group and not created:
         await bot.send_message(message.chat.id, 'Group already added to the DB')
     elif is_group and created:
         await bot.send_message(message.chat.id, 'Group added successfully to the DB')
-    if message.chat.type == "private" and not created:
+    if is_user and not created:
         await bot.send_message(message.from_user.id, 'You are already added to the DB')
-    else:
+    elif is_user and created:
         await bot.send_message(message.from_user.id, 'You are added successfully to the DB')
 
 

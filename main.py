@@ -10,11 +10,7 @@ from utils.tasks import scheduled_task
 
 async def on_startup(_):
     await init_models()
-    task = asyncio.create_task(scheduled_task())
-    try:
-        await task
-    except asyncio.CancelledError:
-        task.cancel()
+    scheduled_task()
     print('Bot online')
 
 

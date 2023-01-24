@@ -1,7 +1,7 @@
-import asyncio
-
 from datetime import datetime
 from time import perf_counter
+
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from bot import bot
 from service.users import get_users
@@ -41,10 +41,7 @@ async def send_message():
     create_html(counter, during)
     
 
-async def scheduled_task():
-    while True:
-        try:
-            await send_message()
-            await asyncio.sleep(60)
-        except asyncio.CancelledError:
-            break
+def scheduled_task():
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(send_message, 'interval', minutes=1)
+    scheduler.start()
