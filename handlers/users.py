@@ -1,12 +1,13 @@
 from aiogram import types, Dispatcher
 from bot import bot
-from service.users import create_user
+from service.users import create_user, get_users
 from sqlalchemy.ext.asyncio import AsyncSession
 from db.base import session
 
 
 async def command_start(message: types.Message, session: AsyncSession = session):
     await create_user(message, session)
+    await get_users(session)
     await bot.send_message(message.from_user.id, 'hi')
 
 

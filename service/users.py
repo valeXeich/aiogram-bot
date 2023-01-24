@@ -23,6 +23,12 @@ async def get_user(message: Message, session: AsyncSession):
     return result.scalars().first()
 
 
+async def get_users(session: AsyncSession):
+    query = select(User)
+    result = await session.execute(query)
+    return result.scalars().all()
+
+
 async def check_user(message: Message, session: AsyncSession):
     user = await get_user(message, session)
     if user:
